@@ -1,7 +1,8 @@
-import React, { useEffect, useRef } from 'react'
+import React, {useEffect, useRef } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import DirectionalBox from './DirectionalBox'
+import DroneScene from "./EgoDrone";
 import "./styles.css"
 
 function MeshArray({data}) {
@@ -45,6 +46,7 @@ export default function App() {
             <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} decay={0} intensity={Math.PI}/>
             <pointLight position={[-10, -10, -10]} decay={0} intensity={Math.PI}/>
             <MeshArray data={meshData} />
+            <DroneScene />
             <OrbitControls/>
         </Canvas>
     )
