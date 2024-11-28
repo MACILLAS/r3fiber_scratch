@@ -1,4 +1,4 @@
-import React, {forwardRef, useRef, useState} from "react";
+import React, {forwardRef, useRef, useState, useEffect} from "react";
 import {useFrame} from "@react-three/fiber";
 import {Edges, Html} from "@react-three/drei";
 import * as THREE from "three";
@@ -45,6 +45,12 @@ const DirectionalBox = forwardRef((props, ref) => {
         newPosition[index] = parseFloat(value) || 0; // Default to 1 if invalid
         setBoxPositions(newPosition);
     };
+
+    useEffect(() => {
+        if (props.onStateChange) {
+            props.onStateChange({name, description, boxDimensions, boxPositions, boxRotations});
+        }
+    }, [name, description, boxDimensions, boxPositions, boxRotations, props.onStateChange]);
 
     // UseFrame to dynamically change box pose and align the arrow
     useFrame(() => {

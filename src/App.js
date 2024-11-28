@@ -8,6 +8,10 @@ import "./styles.css"
 function MeshArray({data}) {
     const annotRefs = useRef([]);
 
+    const handleStateChange = (state) => {
+        console.log(`State change detected in box ${state.name}:`, state);
+    };
+
     useEffect(() => {
         // Log positions of all names of the Directional Boxes when they mount
         console.log("Name of all DirectionalBoxes:");
@@ -27,7 +31,9 @@ function MeshArray({data}) {
                     rotation={item.rotation}
                     size={item.size}
                     name={item.id}
-                    _description={item.description} />
+                    _description={item.description}
+                    onStateChange={handleStateChange}
+                />
             ))}
         </>
     );
