@@ -37,8 +37,6 @@ const DirectionalBox = forwardRef((props, ref) => {
     return (
         < group {...props} ref={boxRef}>
             <mesh
-                {...props}
-                ref={boxRef}
                 scale={interaction.clicked ? 1 : 1}
                 onClick={interaction.handleClick}
                 onPointerOver={interaction.handlePointerOver}
