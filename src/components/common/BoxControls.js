@@ -20,7 +20,7 @@ const BoxControls = ({
     <div style={styles}>
       <div>
           <label>
-              Width:
+              Dim X:
               <input
                   type="number"
                   value={boxDimensions[0]}
@@ -29,7 +29,7 @@ const BoxControls = ({
               />
           </label>
           <label>
-              Depth:
+              Dim Y:
               <input
                   type="number"
                   value={boxDimensions[1]}
@@ -38,7 +38,7 @@ const BoxControls = ({
               />
           </label>
           <label>
-              Height:
+              Dim Z:
               <input
                   type="number"
                   value={boxDimensions[2]}
