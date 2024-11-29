@@ -3,9 +3,33 @@ import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import DirectionalBox from './components/three/DirectionalBox'
 import DroneScene from "./components/three/EgoDrone";
+import CameraOrb from "./CameraOrb";
 import "./styles.css"
 
 import { meshData } from './constants/meshData';
+import { cameraData } from './constants/cameraData';
+
+function CameraArray({data}) {
+    const camRefs = useRef([]);
+
+    const handleStateChange = (state) => {
+        console.log(`State change detected in box ${state.number}:`, state);
+    }
+
+    return (
+        <>
+            {data.map((item, index) => (
+                <CameraOrb
+                    ref={(el) => (camRefs.current[index] = el)}
+                    position={item.position}
+                    rotation={item.rotation}
+                    number={item.id}
+                    onStateChange={handleStateChange}
+                />
+            ))}
+        </>
+    );
+}
 
 function MeshArray({data}) {
     const annotRefs = useRef([]);
@@ -48,6 +72,7 @@ export default function App() {
             <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} decay={0} intensity={Math.PI}/>
             <pointLight position={[-10, -10, -10]} decay={0} intensity={Math.PI}/>
             <MeshArray data={meshData} />
+            <CameraArray data={cameraData} />
             <DroneScene />
             <OrbitControls/>
         </Canvas>
