@@ -5,7 +5,6 @@ import {Edges, Html} from "@react-three/drei";
 const DirectionalBox = forwardRef((props, ref) => {
     // These reference gives us direct access to the THREE.Mesh objects
     const boxRef = useRef();
-    const arrowRef = useRef();
 
     // Expose the internal ref to the parent
     React.useImperativeHandle(ref, () => boxRef.current);
@@ -51,17 +50,13 @@ const DirectionalBox = forwardRef((props, ref) => {
         }
     }, [name, description, boxDimensions, boxPositions, boxRotations, props.onStateChange]);
 
-    // UseFrame to dynamically change box pose and align the arrow
+    // UseFrame to dynamically change box pose
     useFrame(() => {
         if (boxRef.current){
             boxRef.current._name = name;
             boxRef.current._description = description;
             boxRef.current.rotation.set(boxRotations[0], boxRotations[1], boxRotations[2]);
             boxRef.current.position.set(boxPositions[0], boxPositions[1], boxPositions[2]);
-        }
-        if (arrowRef.current) {
-            //arrowRef.current.position.set(boxRef.current.position.x, boxRef.current.position.y, boxRef.current.position.z);
-            arrowRef.current.rotation.set(boxRef.current.rotation.x, boxRef.current.rotation.y, boxRef.current.rotation.z);
         }
     });
 
