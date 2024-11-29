@@ -1,7 +1,6 @@
 import React, {forwardRef, useRef, useState, useEffect} from "react";
 import {useFrame} from "@react-three/fiber";
 import {Edges, Html} from "@react-three/drei";
-import * as THREE from "three";
 
 const DirectionalBox = forwardRef((props, ref) => {
     // These reference gives us direct access to the THREE.Mesh objects
@@ -61,17 +60,15 @@ const DirectionalBox = forwardRef((props, ref) => {
             boxRef.current.position.set(boxPositions[0], boxPositions[1], boxPositions[2]);
         }
         if (arrowRef.current) {
-            arrowRef.current.position.set(boxRef.current.position.x, boxRef.current.position.y, boxRef.current.position.z);
+            //arrowRef.current.position.set(boxRef.current.position.x, boxRef.current.position.y, boxRef.current.position.z);
             arrowRef.current.rotation.set(boxRef.current.rotation.x, boxRef.current.rotation.y, boxRef.current.rotation.z);
         }
     });
 
     // Return the view, these are regular Threejs elements expressed in JSX
     return (
-        <>
+        < group {...props} ref={boxRef}>
             <mesh
-                {...props}
-                ref={boxRef}
                 scale={clicked ? 1 : 1}
                 onClick={(event) => click(!clicked)}
                 onPointerOver={(event) => (event.stopPropagation(), hover(true))}
@@ -112,7 +109,7 @@ const DirectionalBox = forwardRef((props, ref) => {
                         }}>
                             <div>
                                 <label>
-                                    Width:
+                                    X:
                                     <input
                                         type="number"
                                         value={boxDimensions[0]}
@@ -121,7 +118,7 @@ const DirectionalBox = forwardRef((props, ref) => {
                                     />
                                 </label>
                                 <label>
-                                    Depth:
+                                    Y:
                                     <input
                                         type="number"
                                         value={boxDimensions[1]}
@@ -130,7 +127,7 @@ const DirectionalBox = forwardRef((props, ref) => {
                                     />
                                 </label>
                                 <label>
-                                    Height:
+                                    Z:
                                     <input
                                         type="number"
                                         value={boxDimensions[2]}
@@ -200,16 +197,15 @@ const DirectionalBox = forwardRef((props, ref) => {
                         </div>
                     </Html>)}
             </mesh>
-            <arrowHelper
-                ref={arrowRef}
-                args={[
-                    new THREE.Vector3(0, 0, 1), // Direction (forward)
-                    new THREE.Vector3(0, 0, 0), // Origin
-                    1,                          // Length
-                    hovered ? "#c02040" : "yellow", // Color (red when hovered, yellow otherwise)
-                ]}
-            />
-        </>
+            <mesh position={[0, (boxDimensions[1] / 2) + 0.125, 0]}>
+                <cylinderGeometry args={[0.05, 0.05, 0.5, 32]}/>
+                <meshStandardMaterial color={(hovered) ? "#c02040" : "yellow"}/>
+            </mesh>
+            <mesh position={[0, (boxDimensions[1] / 2) + 0.625, 0]}>
+                <coneGeometry args={[0.125, 0.5, 4, 1]}/>
+                <meshStandardMaterial color={(hovered) ? "#c02040" : "yellow"}/>
+            </mesh>
+        </group>
     )
 })
 
