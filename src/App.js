@@ -1,9 +1,11 @@
 import React, {useEffect, useRef } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
-import DirectionalBox from './DirectionalBox'
-import DroneScene from "./EgoDrone";
+import DirectionalBox from './components/three/DirectionalBox'
+import DroneScene from "./components/three/EgoDrone";
 import "./styles.css"
+
+import { meshData } from './constants/meshData';
 
 function MeshArray({data}) {
     const annotRefs = useRef([]);
@@ -40,12 +42,6 @@ function MeshArray({data}) {
 }
 
 export default function App() {
-    const meshData = [
-        { id: 55, position: [-5, 0, 0], rotation: [-Math.PI / 4, 0, 0], size: [1, 0.5, 4], description: "Antenna Object 55"},
-        { id: 66, position: [0, 0, 0], rotation: [0, 0, 0], size: [1, 0.5, 4], description: "Antenna Object 66"},
-        { id: 77, position: [5, 0, 0], rotation: [Math.PI/4, 0, 0], size: [1, 0.5, 4], description: "Antenna Object 77"},
-    ];
-
     return (
         <Canvas>
             <ambientLight intensity={Math.PI / 2}/>
