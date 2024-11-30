@@ -1,0 +1,10 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: r3fiber-scratch
+    ports:
+      - "80:80" # Map host port 80 to container port 80
+    restart: unless-stopped # Automatically restart container unless explicitly stopped
+
