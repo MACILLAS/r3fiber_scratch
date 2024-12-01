@@ -1,0 +1,79 @@
+# .github/workflows/dev.yml
+name: Deploy Development(dev branch) to GitHub Pages
+
+on:
+  # Trigger the workflow on push events targeting the dev branch
+  push:
+    branches:
+      - dev
+      - dev/**
+      - refactor/**
+      - feature/**
+      - bugfix/**
+      - release/**
+      - hotfix/**
+
+  # Allow manual triggering of the workflow from the Actions tab
+  workflow_dispatch:
+
+permissions:
+  # Set necessary permissions for GitHub Pages deployment
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy-dev-branch:
+    environment:
+      # Define the environment name for deployment
+      name: development
+      # Set the environment URL dynamically based on the deployment output
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    env:
+      # Disable CI environment to prevent treating warnings as errors during build
+      CI: false
+    steps:
+      - name: Checkout source code
+        # Fetch the latest source code from the repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        # Install Node.js to support React build commands
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20"
+
+      - name: Set dynamic homepage
+        run: |
+          REPO_NAME=$(echo $GITHUB_REPOSITORY | cut -d'/' -f2)
+          GITHUB_USER=$(echo $GITHUB_REPOSITORY | cut -d'/' -f1)
+          npm pkg set homepage="https://$GITHUB_USER.github.io/$REPO_NAME/dev"
+
+      - name: Install dependencies
+        # Install all necessary npm packages
+        run: npm install
+
+      - name: Build for development
+        # Build the React project for development deployment
+        run: npm run build
+
+      - name: Copy public assets
+        run: |
+          mkdir -p build/model
+          cp -r public/model/* build/model/
+
+      - name: Setup Pages for Development
+        # Configure GitHub Pages for deployment
+        uses: actions/configure-pages@v5
+
+      - name: Upload build artifacts for Development
+        # Upload the build directory to be deployed to GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "./build"
+
+      - name: Deploy Development to GitHub Pages
+        id: deployment
+        # Deploy the uploaded artifacts to GitHub Pages
+        uses: actions/deploy-pages@v4
