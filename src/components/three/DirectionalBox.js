@@ -51,11 +51,11 @@ const DirectionalBox = forwardRef((props, ref) => {
                     </Html>
                 )}
             </mesh>
-            <mesh position={[0, (transform.boxDimensions[1] / 2) + 0.125, 0]}>
+            <mesh position={[0, 0, (transform.boxDimensions[2] / 2) + 0.125]} rotation={[-Math.PI / 2, 0, 0]}>
                 <cylinderGeometry args={[0.05, 0.05, 0.5, 32]}/>
                 <meshStandardMaterial color={(interaction.hovered) ? "#c02040" : "yellow"}/>
             </mesh>
-            <mesh position={[0, (transform.boxDimensions[1] / 2) + 0.625, 0]}>
+            <mesh position={[0, 0, (transform.boxDimensions[2] / 2) + 0.625]} rotation={[Math.PI / 2, 0, 0]}>
                 <coneGeometry args={[0.125, 0.5, 4, 1]}/>
                 <meshStandardMaterial color={(interaction.hovered) ? "#c02040" : "yellow"}/>
             </mesh>

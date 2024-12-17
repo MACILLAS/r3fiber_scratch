@@ -51,13 +51,13 @@ const CameraOrb = forwardRef(({position,
                     </div>
                 </Html>
             </mesh>
-            <mesh position={[0, 0.65 + 0.125, 0]}>
+            <mesh position={[0, 0, 0.65 + 0.125]} rotation={[-Math.PI / 2, 0, 0]}>
                 <cylinderGeometry args={[0.05, 0.05, 0.65, 32]}/>
                 <meshStandardMaterial transparent
                                       opacity={(clicked) ? 0.8 : opacity}
                                       color={(hovered || clicked) ? "#c02040" : color}/>
             </mesh>
-            <mesh position={[0, 0.70 + 0.625, 0]}>
+            <mesh position={[0, 0, 0.70 + 0.625]} rotation={[Math.PI / 2, 0, 0]}>
                 <coneGeometry args={[0.125, 0.5, 4, 1]}/>
                 <meshStandardMaterial transparent
                                       opacity={(clicked) ? 0.8 : opacity}
