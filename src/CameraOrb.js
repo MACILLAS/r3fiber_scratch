@@ -4,7 +4,7 @@ import {Html} from "@react-three/drei";
 const CameraOrb = forwardRef(({position,
                               rotation,
                               number,
-                              scale=1,
+                              scale=0.25,
                               color = "orange",
                               opacity = 0.5, onStateChange}, ref) => {
     const sphereRef = useRef();
@@ -40,7 +40,7 @@ const CameraOrb = forwardRef(({position,
                 <Html distanceFactor={10} center>
                     <div
                         style={{
-                            fontSize: "1.5em",
+                            fontSize: "0.5em",
                             fontWeight: "bold",
                             color: "white",
                             textAlign: "center",

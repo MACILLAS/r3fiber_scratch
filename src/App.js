@@ -1,6 +1,6 @@
 import React, {useEffect, useRef } from 'react'
 import { Canvas } from '@react-three/fiber'
-import { OrbitControls } from '@react-three/drei'
+import {OrbitControls, Splat} from '@react-three/drei'
 import DirectionalBox from './components/three/DirectionalBox'
 import DroneScene from "./components/three/EgoDrone";
 import CameraOrb from "./CameraOrb";
@@ -65,15 +65,19 @@ function MeshArray({data}) {
     );
 }
 
+
 export default function App() {
     return (
         <Canvas>
             <ambientLight intensity={Math.PI / 2}/>
+            <Splat src="model/point_cloud_0607.splat" />
             <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} decay={0} intensity={Math.PI}/>
             <pointLight position={[-10, -10, -10]} decay={0} intensity={Math.PI}/>
-            <MeshArray data={meshData} />
-            <CameraArray data={cameraData} />
-            <DroneScene />
+            <MeshArray data={meshData}/>
+            <group rotation={[Math.PI, 0, 0]}>
+                <CameraArray data={cameraData} />
+            </group>
+            <DroneScene/>
             <OrbitControls/>
         </Canvas>
     )
