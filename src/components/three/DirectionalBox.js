@@ -1,7 +1,6 @@
 import React, {forwardRef, useRef } from "react";
 import {useFrame} from "@react-three/fiber";
 import {Edges, Html} from "@react-three/drei";
-import * as THREE from "three";
 
 import BoxInfo from "../common/BoxInfo";
 import BoxControls from "../common/BoxControls";
@@ -52,11 +51,11 @@ const DirectionalBox = forwardRef((props, ref) => {
                 )}
             </mesh>
             <mesh position={[0, 0, (transform.boxDimensions[2] / 2) + 0.125]} rotation={[-Math.PI / 2, 0, 0]}>
-                <cylinderGeometry args={[0.05, 0.05, 0.5, 32]}/>
+                <cylinderGeometry args={[0.025, 0.025, 0.25, 32]}/>
                 <meshStandardMaterial color={(interaction.hovered) ? "#c02040" : "yellow"}/>
             </mesh>
-            <mesh position={[0, 0, (transform.boxDimensions[2] / 2) + 0.625]} rotation={[Math.PI / 2, 0, 0]}>
-                <coneGeometry args={[0.125, 0.5, 4, 1]}/>
+            <mesh position={[0, 0, (transform.boxDimensions[2] / 2) + 0.375]} rotation={[Math.PI / 2, 0, 0]}>
+                <coneGeometry args={[0.0625, 0.25, 4, 1]}/>
                 <meshStandardMaterial color={(interaction.hovered) ? "#c02040" : "yellow"}/>
             </mesh>
         </group>
