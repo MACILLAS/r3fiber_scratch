@@ -77,11 +77,14 @@ export default function App() {
             <spotLight position={[10, 10, 400]} angle={0.15} penumbra={1} decay={0} intensity={Math.PI}/>
             <pointLight position={[10, 0, 400]} decay={0} intensity={Math.PI}/>
             <MeshArray data={meshData_0527}/>
-            <Splat src="model/point_cloud_0527_GPS.splat" />
+            <Splat src="model/point_cloud_0527_GPS.splat"/>
             <DroneScene/>
             <OrbitControls target={[0, 0, -320]}/>
+            <group rotation={[Math.PI, 0, 0]}>
+                <CameraArray data={cameraData_0527}/>
+            </group>
             <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
-                <GizmoViewport axisColors={['red', 'green', 'blue']} labelColor="white" />
+                <GizmoViewport axisColors={['red', 'green', 'blue']} labelColor="white"/>
             </GizmoHelper>
         </Canvas>
     )
