@@ -1,10 +1,10 @@
 import React, {forwardRef, useEffect, useRef, useState} from "react";
 import {Html} from "@react-three/drei";
 
-const CameraOrb = forwardRef(({position,
-                              rotation,
+const CameraOrb = forwardRef(({position, rotation,
+                              quaternion,
                               number,
-                              scale=0.25,
+                              scale=1,
                               color = "orange",
                               opacity = 0.5, onStateChange}, ref) => {
     const sphereRef = useRef();
@@ -23,7 +23,7 @@ const CameraOrb = forwardRef(({position,
     }, [clicked])
 
     return (
-        <group position={position} rotation={rotation} scale={scale}>
+        <group position={position} quaternion={quaternion} scale={scale}>
             <mesh ref={sphereRef}
                   onClick={(event) => click(!clicked)}
                   onPointerOver={(event) => (event.stopPropagation(), hover(true))}
@@ -40,7 +40,7 @@ const CameraOrb = forwardRef(({position,
                 <Html distanceFactor={10} center>
                     <div
                         style={{
-                            fontSize: "0.5em",
+                            fontSize: "3em",
                             fontWeight: "bold",
                             color: "white",
                             textAlign: "center",

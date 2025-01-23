@@ -1,13 +1,14 @@
 import React, {useEffect, useRef } from 'react'
 import { Canvas } from '@react-three/fiber'
-import {OrbitControls, Splat} from '@react-three/drei'
+import {OrbitControls, Splat, GizmoHelper, GizmoViewport} from '@react-three/drei'
 import DirectionalBox from './components/three/DirectionalBox'
 import DroneScene from "./components/three/EgoDrone";
 import CameraOrb from "./CameraOrb";
 import "./styles.css"
 
-import { meshData } from './constants/meshData';
-import { cameraData } from './constants/cameraData';
+import { meshData_0527 } from './constants/meshData_0527';
+import { cameraData_0527 } from './constants/cameraData_0527';
+import * as THREE from "three";
 
 function CameraArray({data}) {
     const camRefs = useRef([]);
@@ -22,7 +23,7 @@ function CameraArray({data}) {
                 <CameraOrb
                     ref={(el) => (camRefs.current[index] = el)}
                     position={item.position}
-                    rotation={item.rotation}
+                    quaternion={item.quaternion}
                     number={item.id}
                     onStateChange={handleStateChange}
                 />
@@ -67,18 +68,21 @@ function MeshArray({data}) {
 
 
 export default function App() {
+    let camera = new THREE.PerspectiveCamera (90, 1.5, 0.1, 1000);
+    camera.position.set(-8.591, 2.577, -350.33)
+    camera.rotation.set(2.107, -0.02933, -1.9534)
     return (
-        <Canvas>
+        <Canvas camera={camera}>
             <ambientLight intensity={Math.PI / 2}/>
-            <Splat src="model/point_cloud_0607.splat" />
-            <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} decay={0} intensity={Math.PI}/>
-            <pointLight position={[-10, -10, -10]} decay={0} intensity={Math.PI}/>
-            <MeshArray data={meshData}/>
-            <group rotation={[Math.PI, 0, 0]}>
-                <CameraArray data={cameraData} />
-            </group>
+            <spotLight position={[10, 10, 400]} angle={0.15} penumbra={1} decay={0} intensity={Math.PI}/>
+            <pointLight position={[10, 0, 400]} decay={0} intensity={Math.PI}/>
+            <MeshArray data={meshData_0527}/>
+            <Splat src="model/point_cloud_0527_GPS.splat" />
             <DroneScene/>
-            <OrbitControls/>
+            <OrbitControls target={[0, 0, -320]}/>
+            <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
+                <GizmoViewport axisColors={['red', 'green', 'blue']} labelColor="white" />
+            </GizmoHelper>
         </Canvas>
     )
 }

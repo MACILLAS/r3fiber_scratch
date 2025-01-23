@@ -44,7 +44,7 @@ const DirectionalBox = forwardRef((props, ref) => {
                 <meshStandardMaterial transparent opacity={interaction.hovered ? 0.5 : 0}/>
                 <Edges linewidth={5} threshold={15} color={interaction.hovered ? "#c02040" : "yellow"}/>
                 {(interaction.hovered || interaction.clicked) && (
-                    <Html distanceFactor={10}>
+                    <Html distanceFactor={20}>
                         <BoxInfo {...metadata} />
                         <BoxControls {...transform} />
                     </Html>

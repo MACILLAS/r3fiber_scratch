@@ -66,7 +66,7 @@ def main():
 
     for img in model.images.values():
         position, euler_angles = colmap_to_threejs_euler(img.tvec, img.qvec)
-        images.append({'id': img.id, 'position': list(position), 'rotation': list(euler_angles)})
+        images.append({'id': img.id, 'position': list(position), 'quaternion': list([-1*img.qvec[1], -1*img.qvec[2], -1*img.qvec[3], img.qvec[0]])})
 
 
     with open("mydata.json", "w") as fout:
