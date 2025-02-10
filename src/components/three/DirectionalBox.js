@@ -1,12 +1,19 @@
 import React, {forwardRef, useRef } from "react";
 import {useFrame} from "@react-three/fiber";
 import {Edges, Html} from "@react-three/drei";
+import * as THREE from "three";
 
 import BoxInfo from "../common/BoxInfo";
 import BoxControls from "../common/BoxControls";
 import { useBoxTransform } from "../../hooks/box/useBoxTransform";
 import { useBoxMetadata } from "../../hooks/box/useBoxMetadata";
 import { useBoxInteraction } from "../../hooks/box/useBoxInteraction";
+
+function AxesHelper({ size = 1 }) {
+    return (
+        <primitive object={new THREE.AxesHelper(size)} />
+    );
+}
 
 const DirectionalBox = forwardRef((props, ref) => {
     // These reference gives us direct access to the THREE.Mesh objects
@@ -58,6 +65,7 @@ const DirectionalBox = forwardRef((props, ref) => {
                 <coneGeometry args={[0.0625, 0.25, 4, 1]}/>
                 <meshStandardMaterial color={(interaction.hovered) ? "#c02040" : "yellow"}/>
             </mesh>
+            <AxesHelper args={[2]} />
         </group>
     )
 })
