@@ -9,6 +9,12 @@ import { useBoxTransform } from "../../hooks/box/useBoxTransform";
 import { useBoxMetadata } from "../../hooks/box/useBoxMetadata";
 import { useBoxInteraction } from "../../hooks/box/useBoxInteraction";
 
+function AxesHelper({ size = 1 }) {
+    return (
+        <primitive object={new THREE.AxesHelper(size)} />
+    );
+}
+
 const DirectionalBox = forwardRef((props, ref) => {
     // These reference gives us direct access to the THREE.Mesh objects
     const boxRef = useRef();
@@ -45,20 +51,21 @@ const DirectionalBox = forwardRef((props, ref) => {
                 <meshStandardMaterial transparent opacity={interaction.hovered ? 0.5 : 0}/>
                 <Edges linewidth={5} threshold={15} color={interaction.hovered ? "#c02040" : "yellow"}/>
                 {(interaction.hovered || interaction.clicked) && (
-                    <Html distanceFactor={10}>
+                    <Html distanceFactor={20}>
                         <BoxInfo {...metadata} />
                         <BoxControls {...transform} />
                     </Html>
                 )}
             </mesh>
-            <mesh position={[0, (transform.boxDimensions[1] / 2) + 0.125, 0]}>
-                <cylinderGeometry args={[0.05, 0.05, 0.5, 32]}/>
+            <mesh position={[0, 0, (transform.boxDimensions[2] / 2) + 0.125]} rotation={[-Math.PI / 2, 0, 0]}>
+                <cylinderGeometry args={[0.025, 0.025, 0.25, 32]}/>
                 <meshStandardMaterial color={(interaction.hovered) ? "#c02040" : "yellow"}/>
             </mesh>
-            <mesh position={[0, (transform.boxDimensions[1] / 2) + 0.625, 0]}>
-                <coneGeometry args={[0.125, 0.5, 4, 1]}/>
+            <mesh position={[0, 0, (transform.boxDimensions[2] / 2) + 0.375]} rotation={[Math.PI / 2, 0, 0]}>
+                <coneGeometry args={[0.0625, 0.25, 4, 1]}/>
                 <meshStandardMaterial color={(interaction.hovered) ? "#c02040" : "yellow"}/>
             </mesh>
+            <AxesHelper args={[2]} />
         </group>
     )
 })

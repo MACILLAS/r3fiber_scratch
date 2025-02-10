@@ -1,8 +1,8 @@
 import React, {forwardRef, useEffect, useRef, useState} from "react";
 import {Html} from "@react-three/drei";
 
-const CameraOrb = forwardRef(({position,
-                              rotation,
+const CameraOrb = forwardRef(({position, rotation,
+                              quaternion,
                               number,
                               scale=1,
                               color = "orange",
@@ -23,7 +23,7 @@ const CameraOrb = forwardRef(({position,
     }, [clicked])
 
     return (
-        <group position={position} rotation={rotation} scale={scale}>
+        <group position={position} quaternion={quaternion} scale={scale}>
             <mesh ref={sphereRef}
                   onClick={(event) => click(!clicked)}
                   onPointerOver={(event) => (event.stopPropagation(), hover(true))}
@@ -40,7 +40,7 @@ const CameraOrb = forwardRef(({position,
                 <Html distanceFactor={10} center>
                     <div
                         style={{
-                            fontSize: "1.5em",
+                            fontSize: "3em",
                             fontWeight: "bold",
                             color: "white",
                             textAlign: "center",
@@ -51,13 +51,13 @@ const CameraOrb = forwardRef(({position,
                     </div>
                 </Html>
             </mesh>
-            <mesh position={[0, 0.65 + 0.125, 0]}>
+            <mesh position={[0, 0, 0.65 + 0.125]} rotation={[-Math.PI / 2, 0, 0]}>
                 <cylinderGeometry args={[0.05, 0.05, 0.65, 32]}/>
                 <meshStandardMaterial transparent
                                       opacity={(clicked) ? 0.8 : opacity}
                                       color={(hovered || clicked) ? "#c02040" : color}/>
             </mesh>
-            <mesh position={[0, 0.70 + 0.625, 0]}>
+            <mesh position={[0, 0, 0.70 + 0.625]} rotation={[Math.PI / 2, 0, 0]}>
                 <coneGeometry args={[0.125, 0.5, 4, 1]}/>
                 <meshStandardMaterial transparent
                                       opacity={(clicked) ? 0.8 : opacity}

@@ -26,6 +26,7 @@ const BoxControls = ({
                   value={boxDimensions[0]}
                   onChange={(e) => updateDimension(0, e.target.value)}
                   style={{margin: "5px", width: "50px"}}
+                  step="0.1" min="0" max="5"
               />
           </label>
           <label>
@@ -35,6 +36,7 @@ const BoxControls = ({
                   value={boxDimensions[1]}
                   onChange={(e) => updateDimension(1, e.target.value)}
                   style={{margin: "5px", width: "50px"}}
+                  step="0.1" min="0" max="5"
               />
           </label>
           <label>
@@ -44,6 +46,7 @@ const BoxControls = ({
                   value={boxDimensions[2]}
                   onChange={(e) => updateDimension(2, e.target.value)}
                   style={{margin: "5px", width: "50px"}}
+                  step="0.1" min="0" max="5"
               />
           </label>
       </div>
@@ -55,6 +58,9 @@ const BoxControls = ({
                   value={boxRotations[0]}
                   onChange={(e) => updateRotation(0, e.target.value)}
                   style={{margin: "5px", width: "50px"}}
+                  step="0.017"
+                  min="-3.14"
+                  max={Math.PI}
               />
           </label>
           <label>
@@ -64,6 +70,9 @@ const BoxControls = ({
                   value={boxRotations[1]}
                   onChange={(e) => updateRotation(1, e.target.value)}
                   style={{margin: "5px", width: "50px"}}
+                  step="0.017"
+                  min="-3.14"
+                  max={Math.PI}
               />
           </label>
           <label>
@@ -73,6 +82,9 @@ const BoxControls = ({
                   value={boxRotations[2]}
                   onChange={(e) => updateRotation(2, e.target.value)}
                   style={{margin: "5px", width: "50px"}}
+                  step="0.017"
+                  min="-3.14"
+                  max={Math.PI}
               />
           </label>
       </div>
@@ -84,6 +96,7 @@ const BoxControls = ({
                   value={boxPositions[0]}
                   onChange={(e) => updatePosition(0, e.target.value)}
                   style={{margin: "5px", width: "50px"}}
+                  step="0.1"
               />
           </label>
           <label>
@@ -93,6 +106,7 @@ const BoxControls = ({
                   value={boxPositions[1]}
                   onChange={(e) => updatePosition(1, e.target.value)}
                   style={{margin: "5px", width: "50px"}}
+                  step="0.1"
               />
           </label>
           <label>
@@ -102,6 +116,7 @@ const BoxControls = ({
                   value={boxPositions[2]}
                   onChange={(e) => updatePosition(2, e.target.value)}
                   style={{margin: "5px", width: "50px"}}
+                  step="0.1"
               />
           </label>
       </div>
