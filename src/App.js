@@ -14,7 +14,7 @@ import { cameraData } from './constants/cameraData_0607';
 // Keyboard status display component
 function KeyboardDisplay({ keysPressed }) {
     // Filter only camera control keys
-    const cameraKeys = ['KeyQ', 'KeyE', 'KeyA', 'KeyD', 'KeyW', 'KeyS', 'KeyI', 'KeyK', 'KeyJ', 'KeyL', 'KeyR'];
+    const cameraKeys = ['KeyQ', 'KeyE', 'KeyA', 'KeyD', 'KeyW', 'KeyS', 'KeyI', 'KeyK', 'KeyJ', 'KeyL', 'KeyU', 'KeyO', 'KeyR'];
     const pressedCameraKeys = Object.keys(keysPressed).filter(key => 
         keysPressed[key] && cameraKeys.includes(key)
     );
@@ -30,6 +30,8 @@ function KeyboardDisplay({ keysPressed }) {
         'KeyK': 'K (Pitch Down)',
         'KeyJ': 'J (Yaw Left)',
         'KeyL': 'L (Yaw Right)',
+        'KeyU': 'U (Roll Left)',
+        'KeyO': 'O (Roll Right)',
         'KeyR': 'R (Reset)'
     };
 
@@ -64,7 +66,7 @@ function KeyboardDisplay({ keysPressed }) {
                 <div style={{ color: '#888' }}>No keys pressed</div>
             )}
             <div style={{ marginTop: '10px', fontSize: '10px', color: '#aaa' }}>
-                Move: WASD+QE | Rotate: IJKL | Reset: R
+                Move: WASD+QE | Rotate: IJKLOP | Reset: R
             </div>
         </div>
     );
@@ -110,7 +112,7 @@ function KeyboardControls({ onKeysChange }) {
         if (!keysPressed) return;
 
         const moveSpeed = delta * 5;
-        const rotateSpeed = delta * 1;
+        const rotateSpeed = delta * 3;
 
         // Camera movement based on local coordinate system (original method)
         if (keysPressed['KeyQ']) camera.translateY(-moveSpeed);
@@ -128,6 +130,9 @@ function KeyboardControls({ onKeysChange }) {
             .applyQuaternion(camera.quaternion)
             .normalize();
         const localYAxis = new THREE.Vector3(0, 1, 0)
+            .applyQuaternion(camera.quaternion)
+            .normalize();
+        const localZAxis = new THREE.Vector3(0, 0, 1)
             .applyQuaternion(camera.quaternion)
             .normalize();
 
@@ -158,6 +163,21 @@ function KeyboardControls({ onKeysChange }) {
             );
             camera.quaternion.multiplyQuaternions(yawQuaternion, camera.quaternion);
         }
+
+        // Roll (left/right)
+        if (keysPressed['KeyU']) {
+            const yawQuaternion = new THREE.Quaternion().setFromAxisAngle(
+                localZAxis, effectiveRotationDelta
+            );
+            camera.quaternion.multiplyQuaternions(yawQuaternion, camera.quaternion);
+        }
+        if (keysPressed['KeyO']) {
+            const yawQuaternion = new THREE.Quaternion().setFromAxisAngle(
+                localZAxis, -effectiveRotationDelta
+            );
+            camera.quaternion.multiplyQuaternions(yawQuaternion, camera.quaternion);
+        }
+
 
         camera.quaternion.normalize();
 
